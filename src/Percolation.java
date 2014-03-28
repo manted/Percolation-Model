@@ -7,139 +7,85 @@ public class Percolation {
 	public static final int SATURATED = 1;
 	public static final int HARD = 2;
 
-	private long currentRow = 0;
-	private long totalOil = 0;
+	protected long currentLayer = 0;
+	protected long totalOil = 0;
 
-	private float porosity = 0.0f;
-	private Random random = new Random();
+	protected float porosity = 0.0f;
+	protected Random random = new Random();
 
-	private int[] row = new int[NUM_OF_COLUMN];
-	private int[] nextRow = new int[NUM_OF_COLUMN];
-
-	private boolean hasOil = false;
+	protected boolean hasOil = false;
 
 	public void setup(float porosity) {
 		this.totalOil = 0;
-		this.currentRow = 0;
+		this.currentLayer = 0;
 		this.porosity = porosity;
 
-		this.setupRow();
-		this.setupNextRow();
+		this.setupLayer();
+		this.setupNextLayer();
 
 		this.hasOil = true;
 	}
 
-	private void setupRow() {
-		for (int i = 0; i < NUM_OF_COLUMN; i++) {
-			if (i % 2 == 0) {
-				this.row[i] = HARD;
-			} else {
-				this.row[i] = SATURATED;
-			}
-		}
+	protected void setupLayer() {
+
 	}
 
-	private void setupNextRow() {
-		int x = 0;
+	protected void setupNextLayer() {
 
-		if (this.row[0] == HARD) {
-			x = 1;
-		}
-
-		for (int i = 0; i < NUM_OF_COLUMN; i++) {
-			if (i % 2 == x) {
-				this.nextRow[i] = HARD;
-			} else {
-				this.nextRow[i] = EMPTY;
-			}
-		}
 	}
 
-	private void copyNextRow() {
-		for (int i = 0; i < NUM_OF_COLUMN; i++) {
-			this.row[i] = this.nextRow[i];
-		}
+	protected void copyNextLayer() {
+
 		// setup next row
-		this.setupNextRow();
-	}
-
-	private void resetColor() {
-
-	}
-
-	private void resetTicks() {
-		this.currentRow = 0;
-		this.hasOil = false;
+		this.setupNextLayer();
 	}
 
 	public void start() {
-		while (this.hasOil == true && this.currentRow < 20000) {
+		while (this.hasOil == true && this.currentLayer < 20000) {
 			this.go();
 		}
-		System.out.println("Number of rows = " + this.currentRow);
+		System.out.println("Number of rows = " + this.currentLayer);
 		System.out.println("Total oil = " + this.totalOil);
 	}
 
-	public void go() {
-		if (this.numberOfOilInRow(this.row) == 0) {
+	private void go() {
+		if (this.numberOfOilInCurrentLayer() == 0) {
 			this.hasOil = false;
 		} else {
 			this.percolate();
-			this.totalOil += this.numberOfOilInRow(this.row);
-			this.copyNextRow();
-			// this.wrapOil();
+			this.totalOil += this.numberOfOilInCurrentLayer();
+			this.copyNextLayer();
 		}
-		this.currentRow++;
+		this.currentLayer++;
 	}
 
-	private void percolate() {
-		for (int i = 0; i < NUM_OF_COLUMN; i++) {
-			if (this.row[i] == SATURATED) {
-				if (i >= 1 && i <= NUM_OF_COLUMN - 2) {
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[i - 1] = SATURATED;
-					}
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[i + 1] = SATURATED;
-					}
-				} else if (i == 0) {
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[1] = SATURATED;
-					}
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[NUM_OF_COLUMN - 1] = SATURATED;
-					}
-				} else if (i == NUM_OF_COLUMN - 1) {
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[0] = SATURATED;
-					}
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[NUM_OF_COLUMN - 2] = SATURATED;
-					}
-				}
-			}
-		}
+	protected void percolate() {
+		
 	}
 
-	private void wrapOil() {
+//	private void resetColor() {
+//
+//	}
+//
+//	private void resetTicks() {
+//		this.currentRow = 0;
+//		this.hasOil = false;
+//	}
+//	
+//	private void wrapOil() {
+//
+//	}
 
-	}
-
-	private int numberOfOilInRow(int[] row) {
-		int count = 0;
-		for (int i : row) {
-			if (i == SATURATED)
-				count++;
-		}
-		return count;
+	protected int numberOfOilInCurrentLayer() {
+		return 0;
 	}
 
 	public long getCurrentRow() {
-		return currentRow;
+		return currentLayer;
 	}
 
-	public void setCurrentRow(long currentRow) {
-		this.currentRow = currentRow;
+	public void setCurrentRow(long currentLayer) {
+		this.currentLayer = currentLayer;
 	}
 
 	public long getTotalOil() {
@@ -151,8 +97,6 @@ public class Percolation {
 	}
 
 	public static void main(String args[]) {
-		Percolation model = new Percolation();
-		model.setup(0.65f);
-		model.start();
+
 	}
 }
