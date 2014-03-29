@@ -19,8 +19,10 @@ public class Percolation {
 	protected Random random = new Random();
 
 	protected boolean hasOil = false;
+	private int maxTicks = 0;
 
-	public void setup(float porosity, int porosityMode) {
+	public void setup(float porosity, int maxTicks, int porosityMode) {
+		this.maxTicks = maxTicks;
 		this.porosityMode = porosityMode;
 		
 		this.totalOil = 0;
@@ -88,7 +90,6 @@ public class Percolation {
 
 	private void changePorosity(){
 		this.porosity = this.porosity * 0.99f;
-		if(this.porosity > 1.0f) this.porosity = 1.0f;
 	}
 	
 	protected int numberOfOilInCurrentLayer() {
