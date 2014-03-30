@@ -40,149 +40,52 @@ public class Percolation3D extends Percolation {
 		// setup next row
 		this.setupNextLayer();
 	}
-	
+
 	protected void percolate() {
 		for (int i = 0; i < NUM_OF_COLUMN; i++) { // row
 			for(int j = 0; j < NUM_OF_COLUMN; j++){ // col
 				if (this.layer[i][j] == SATURATED) {
-					// center cells
-					if(i >= 1 && i <= NUM_OF_COLUMN - 2 && j >= 1 && j <= NUM_OF_COLUMN - 2){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j - 1] = SATURATED;
-						}
+					int[] a0 = {i - 1, j - 1},
+						  a1 = {i - 1, j + 1},
+						  a2 = {i + 1, j - 1},
+						  a3 = {i + 1, j + 1};
+					a0 = this.refineCoordinate(a0);
+					a1 = this.refineCoordinate(a1);
+					a2 = this.refineCoordinate(a2);
+					a3 = this.refineCoordinate(a3);
+					
+					if (this.random.nextDouble() <= this.porosity) {
+						this.nextLayer[a0[0]][a0[1]] = SATURATED;
 					}
-					//top center
-					else if(i == 0 && j >= 1 && j <= NUM_OF_COLUMN - 2){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j - 1] = SATURATED;
-						}
+					if (this.random.nextDouble() <= this.porosity) {
+						this.nextLayer[a1[0]][a1[1]] = SATURATED;
 					}
-					//right center
-					else if(j == NUM_OF_COLUMN - 1 && i >= 1 && i <= NUM_OF_COLUMN - 2){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j - 1] = SATURATED;
-						}
+					if (this.random.nextDouble() <= this.porosity) {
+						this.nextLayer[a2[0]][a2[1]] = SATURATED;
 					}
-					//bottom center
-					else if(i == NUM_OF_COLUMN - 1 && j >= 1 && j <= NUM_OF_COLUMN - 2){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][j - 1] = SATURATED;
-						}
-					}
-					//left center
-					else if(j == 0 && i >= 1 && i <= NUM_OF_COLUMN - 2){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][NUM_OF_COLUMN - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][j + 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i + 1][NUM_OF_COLUMN - 1] = SATURATED;
-						}
-					}
-					//top left corner
-					else if(i == 0 && j == 0){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][NUM_OF_COLUMN - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[1][1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[1][NUM_OF_COLUMN - 1] = SATURATED;
-						}
-					}
-					//top right corner
-					else if(i == 0 && j == NUM_OF_COLUMN - 1){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[NUM_OF_COLUMN - 1][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[1][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[1][j - 1] = SATURATED;
-						}
-					}
-					//bottom right corner
-					else if(i == NUM_OF_COLUMN - 1 && j == NUM_OF_COLUMN - 1){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][j - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][0] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][j - 1] = SATURATED;
-						}
-					}
-					//bottom left corner
-					else if(i == NUM_OF_COLUMN - 1 && j == 0){
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][NUM_OF_COLUMN - 1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[i - 1][1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][1] = SATURATED;
-						}
-						if (this.random.nextDouble() <= this.porosity) {
-							this.nextLayer[0][NUM_OF_COLUMN - 1] = SATURATED;
-						}
+					if (this.random.nextDouble() <= this.porosity) {
+						this.nextLayer[a3[0]][a3[1]] = SATURATED;
 					}
 				}
 			}
 		}
+	}
+	
+	private int[] refineCoordinate(int[] coordinate){
+		int[] co = new int[2];
+		co[0] = coordinate[0];
+		co[1] = coordinate[1];
+		if(co[0] == -1){
+			co[0] = NUM_OF_COLUMN - 1;
+		}else if(co[0] == NUM_OF_COLUMN){
+			co[0] = 0;
+		}
+		if(co[1] == -1){
+			co[1] = NUM_OF_COLUMN - 1;
+		}else if(co[1] == NUM_OF_COLUMN){
+			co[1] = 0;
+		}
+		return co;
 	}
 	
 	protected int numberOfOilInCurrentLayer() {
@@ -198,9 +101,9 @@ public class Percolation3D extends Percolation {
 	
 	public static void main(String args[]) {
 		Percolation3D model = new Percolation3D();
-		model.setup(0.64f, 10000, SAME_POROSITY);
+		model.setup(0.64f, 1000, SAME_POROSITY);
 		model.start();
-		model.setup(0.64f, 10000, DIFFERENT_POROSITY);
+		model.setup(0.64f, 1000, DIFFERENT_POROSITY);
 		model.start();
 	}
 }
