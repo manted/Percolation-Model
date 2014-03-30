@@ -50,7 +50,7 @@ public class Percolation {
 	}
 
 	public void start() {
-		while (this.hasOil == true && this.currentLayer < 20000) {
+		while (this.hasOil == true && this.currentLayer < this.maxTicks) {
 			this.go();
 			if(this.porosityMode == DIFFERENT_POROSITY) this.changePorosity();
 		}
