@@ -7,12 +7,12 @@ public class Percolation {
 	public static final int SATURATED = 1;
 	public static final int HARD = 2;
 	
-	public static final int SAME_POROSITY = 0;
+	public static final int CONSTANT_POROSITY = 0;
 	public static final int DIFFERENT_POROSITY = 1;
 	
 	private int porosityMode = 0;
 
-	protected long currentLayer = 0;
+	protected long currentLayer = 1;
 	protected long totalOil = 0;
 
 	protected float porosity = 0.0f;
@@ -26,7 +26,7 @@ public class Percolation {
 		this.porosityMode = porosityMode;
 		
 		this.totalOil = 0;
-		this.currentLayer = 0;
+		this.currentLayer = 1;
 		this.porosity = porosity;
 
 		this.setupLayer();
@@ -54,9 +54,9 @@ public class Percolation {
 			this.go();
 			if(this.porosityMode == DIFFERENT_POROSITY) this.changePorosity();
 		}
-		System.out.println("Porosity Mode = " + this.porosityMode);
-		System.out.println("Number of rows = " + this.currentLayer);
-		System.out.println("Total oil = " + this.totalOil);
+//		System.out.println("Porosity Mode = " + this.porosityMode);
+//		System.out.println("Number of rows = " + this.currentLayer);
+//		System.out.println("Total oil = " + this.totalOil);
 	}
 
 	private void go() {
