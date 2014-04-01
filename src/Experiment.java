@@ -6,7 +6,7 @@ public class Experiment {
 	public static final int THREE_D = 1;
 	
 	public static final float MAX_POROSITY = 0.75f;
-	public static final float INITIAL_POROSITY = 0.005f;
+	public static final float INITIAL_POROSITY = 0.1f;
 	public static final float POROSITY_STEP = 0.005f;
 	
 	private int porosityMode = 0;
@@ -34,8 +34,9 @@ public class Experiment {
 	public void run(){
 		float newPorosity = INITIAL_POROSITY;
 		for(int i = 0; newPorosity < MAX_POROSITY; i++){
+			// used to get average result
 			Result result = new Result();
-			newPorosity += POROSITY_STEP;
+			
 			for(int j = 0; j < Result.NUMBER_OF_RUNS; j++){
 				this.model.setup(newPorosity, this.maxTicks, this.porosityMode);
 				this.model.start();
@@ -47,25 +48,25 @@ public class Experiment {
 				result.addFinalDepth(finalDepth);
 				result.addFinalTotalOil(finalTotalOil);
 			}
+			// result of current porosity experiment
 			ExperimentResult er = new ExperimentResult(newPorosity,result.getAverageFinalDepth(),result.getAverageTotalOil());
 			this.results.add(er);
+			// increase porosity
+			newPorosity += POROSITY_STEP;
 		}
 		this.printResults();
 	}
 	
 	private void printResults(){
 		for(ExperimentResult aResult : this.results){
-//			System.out.println("Porosity = " + aResult[0]);
-//			System.out.println("Final Depth = " + aResult[1]);
-//			System.out.println("Final Total oil = " + aResult[2]);
-			System.out.format("%.1f%%, %d, %d",aResult.getPorosity() * 100,aResult.getFinalDepth(),aResult.getFinalTotalOil());
+			System.out.format("%.1f%%, %5d, %7d",aResult.getPorosity() * 100,aResult.getFinalDepth(),aResult.getFinalTotalOil());
 			System.out.println();
 		}
 	}
 	
 	public static void main(String args[]){
 		Experiment constant2D = new Experiment();
-		constant2D.setup(TWO_D, Percolation.CONSTANT_POROSITY, 30000);
+		constant2D.setup(TWO_D, Percolation.CONSTANT_POROSITY, 1000);
 		constant2D.run();
 	}
 }
