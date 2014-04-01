@@ -101,7 +101,7 @@ public class Percolation3D extends Percolation {
 	
 	public static void main(String args[]) {
 		Percolation3D model = new Percolation3D();
-		model.setup(0.64f, 1000, SAME_POROSITY);
+		model.setup(0.64f, 1000, CONSTANT_POROSITY);
 		model.start();
 		model.setup(0.64f, 1000, DIFFERENT_POROSITY);
 		model.start();

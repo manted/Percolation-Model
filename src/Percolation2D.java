@@ -78,7 +78,7 @@ public class Percolation2D extends Percolation {
 	
 	public static void main(String args[]) {
 		Percolation2D model = new Percolation2D();
-		model.setup(0.64f, 20000, SAME_POROSITY);
+		model.setup(0.64f, 20000, CONSTANT_POROSITY);
 		model.start();
 		model.setup(0.64f, 20000, DIFFERENT_POROSITY);
 		model.start();
