@@ -57,7 +57,7 @@ public class Experiment {
 		this.printResults();
 	}
 	
-	private void printResults(){
+	public void printResults(){
 		for(ExperimentResult aResult : this.results){
 			System.out.format("%.1f%%, %5d, %7d",aResult.getPorosity() * 100,aResult.getFinalDepth(),aResult.getFinalTotalOil());
 			System.out.println();
