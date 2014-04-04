@@ -45,10 +45,10 @@ public class Percolation3D extends Percolation {
 		for (int i = 0; i < NUM_OF_COLUMN; i++) { // row
 			for(int j = 0; j < NUM_OF_COLUMN; j++){ // col
 				if (this.layer[i][j] == SATURATED) {
-					int[] a0 = {i - 1, j - 1},
-						  a1 = {i - 1, j + 1},
-						  a2 = {i + 1, j - 1},
-						  a3 = {i + 1, j + 1};
+					int[] a0 = {i, j - 1},
+						  a1 = {i - 1, j},
+						  a2 = {i, j + 1},
+						  a3 = {i + 1, j};
 					a0 = this.refineCoordinate(a0);
 					a1 = this.refineCoordinate(a1);
 					a2 = this.refineCoordinate(a2);
