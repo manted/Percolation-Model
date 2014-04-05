@@ -1,6 +1,7 @@
 
 public class Percolation2D extends Percolation {
-
+	public static final int NUM_OF_COLUMN = 150;
+	
 	private int[] row = new int[NUM_OF_COLUMN];
 	private int[] nextRow = new int[NUM_OF_COLUMN];
 	
@@ -52,13 +53,7 @@ public class Percolation2D extends Percolation {
 					if (this.random.nextDouble() <= this.porosity) {
 						this.nextRow[1] = SATURATED;
 					}
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[NUM_OF_COLUMN - 1] = SATURATED;
-					}
 				} else if (i == NUM_OF_COLUMN - 1) {
-					if (this.random.nextDouble() <= this.porosity) {
-						this.nextRow[0] = SATURATED;
-					}
 					if (this.random.nextDouble() <= this.porosity) {
 						this.nextRow[NUM_OF_COLUMN - 2] = SATURATED;
 					}
@@ -78,9 +73,9 @@ public class Percolation2D extends Percolation {
 	
 	public static void main(String args[]) {
 		Percolation2D model = new Percolation2D();
-		model.setup(0.64f, 20000, CONSTANT_POROSITY);
+		model.setup(0.62f, 20000, CONSTANT_POROSITY);
 		model.start();
-		model.setup(0.64f, 20000, DIFFERENT_POROSITY);
-		model.start();
+//		model.setup(0.64f, 20000, DIFFERENT_POROSITY);
+//		model.start();
 	}
 }

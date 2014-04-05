@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Percolation {
-	public static final int NUM_OF_COLUMN = 200;
+//	public static final int NUM_OF_COLUMN = 200;
 
 	public static final int EMPTY = 0;
 	public static final int SATURATED = 1;
@@ -54,9 +54,9 @@ public class Percolation {
 			this.go();
 			if(this.porosityMode == DIFFERENT_POROSITY) this.changePorosity();
 		}
-//		System.out.println("Porosity Mode = " + this.porosityMode);
-//		System.out.println("Number of rows = " + this.currentLayer);
-//		System.out.println("Total oil = " + this.totalOil);
+		System.out.println("Porosity Mode = " + this.porosityMode);
+		System.out.println("Number of rows = " + this.currentLayer);
+		System.out.println("Total oil = " + this.totalOil);
 	}
 
 	private void go() {
@@ -74,19 +74,6 @@ public class Percolation {
 	protected void percolate() {
 		
 	}
-
-//	private void resetColor() {
-//
-//	}
-//
-//	private void resetTicks() {
-//		this.currentRow = 0;
-//		this.hasOil = false;
-//	}
-//	
-//	private void wrapOil() {
-//
-//	}
 
 	private void changePorosity(){
 		this.porosity = this.porosity * 0.99f;
