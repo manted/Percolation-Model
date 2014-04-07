@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Experiment {
 	public static final int TWO_D = 0;
 	public static final int THREE_D = 1;
@@ -8,6 +7,7 @@ public class Experiment {
 	public static final float MAX_POROSITY = 0.75f;
 	public static final float INITIAL_POROSITY = 0.1f;
 	public static final float POROSITY_STEP = 0.005f;
+	public static final int NUM_OF_POROSITIES = (int)((MAX_POROSITY - INITIAL_POROSITY) / POROSITY_STEP) + 1;
 	
 	private int porosityMode = 0;
 	private int maxTicks = 0;
@@ -15,7 +15,7 @@ public class Experiment {
 //	private long finalDepth = 0;
 //	private long finalTotalOil = 0;
 	
-	private ArrayList<ExperimentResult> results = new ArrayList<ExperimentResult>((int)(MAX_POROSITY / POROSITY_STEP));
+	private ArrayList<ExperimentResult> results = new ArrayList<ExperimentResult>(NUM_OF_POROSITIES);
 	
 	private Percolation model;
 	
@@ -33,7 +33,7 @@ public class Experiment {
 	
 	public void run(){
 		float newPorosity = INITIAL_POROSITY;
-		for(int i = 0; newPorosity < MAX_POROSITY; i++){
+		for(; newPorosity <= MAX_POROSITY; newPorosity += POROSITY_STEP){
 			// used to get average result
 			Result result = new Result();
 			
@@ -52,7 +52,7 @@ public class Experiment {
 			ExperimentResult er = new ExperimentResult(newPorosity,result.getAverageFinalDepth(),result.getAverageTotalOil());
 			this.results.add(er);
 			// increase porosity
-			newPorosity += POROSITY_STEP;
+//			newPorosity += POROSITY_STEP;
 		}
 		this.printResults();
 	}
@@ -62,6 +62,14 @@ public class Experiment {
 			System.out.format("%.1f%%, %5d, %7d",aResult.getPorosity() * 100,aResult.getFinalDepth(),aResult.getFinalTotalOil());
 			System.out.println();
 		}
+	}
+
+	public ArrayList<ExperimentResult> getResults() {
+		return results;
+	}
+
+	public void setResults(ArrayList<ExperimentResult> results) {
+		this.results = results;
 	}
 	
 	public static void main(String args[]){

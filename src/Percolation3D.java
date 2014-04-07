@@ -8,18 +8,10 @@ public class Percolation3D extends Percolation {
 	protected void setupLayer() {
 		for (int i = 0; i < NUM_OF_COLUMN; i++) { // row
 			for (int j = 0; j < NUM_OF_COLUMN; j++) { // col
-				if (i % 2 == 0) {
-					if (j % 2 == 0) {
-						this.layer[i][j] = HARD;
-					} else {
-						this.layer[i][j] = SATURATED;
-					}
+				if (i % 2 == 1 && j % 2 == 1) {
+					this.layer[i][j] = SATURATED;
 				} else {
-					if (j % 2 == 0) {
-						this.layer[i][j] = SATURATED;
-					} else {
-						this.layer[i][j] = HARD;
-					}
+					this.layer[i][j] = HARD;
 				}
 			}
 		}
@@ -74,6 +66,8 @@ public class Percolation3D extends Percolation {
 							this.nextLayer[a3[0]][a3[1]] = SATURATED;
 						}
 					}
+					
+					this.totalOil += 1;
 				}
 			}
 		}
@@ -106,7 +100,7 @@ public class Percolation3D extends Percolation {
 
 	public static void main(String args[]) {
 		Percolation3D model = new Percolation3D();
-		model.setup(0.285f, 1000, CONSTANT_POROSITY);
+		model.setup(0.295f, 20000, CONSTANT_POROSITY);
 		model.start();
 		// model.setup(0.25f, 1000, DIFFERENT_POROSITY);
 		// model.start();

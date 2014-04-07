@@ -58,6 +58,8 @@ public class Percolation2D extends Percolation {
 						this.nextRow[NUM_OF_COLUMN - 2] = SATURATED;
 					}
 				}
+				
+				this.totalOil += 1;
 			}
 		}
 	}

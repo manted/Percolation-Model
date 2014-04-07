@@ -6,3 +6,5 @@
 .settings/org.eclipse.jdt.core.prefs
 
 *.class
+
+.settings/org.eclipse.core.resources.prefs

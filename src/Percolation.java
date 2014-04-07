@@ -54,9 +54,9 @@ public class Percolation {
 			this.go();
 			if(this.porosityMode == DIFFERENT_POROSITY) this.changePorosity();
 		}
-		System.out.println("Porosity Mode = " + this.porosityMode);
-		System.out.println("Number of rows = " + this.currentLayer);
-		System.out.println("Total oil = " + this.totalOil);
+//		System.out.println("Porosity Mode = " + this.porosityMode);
+//		System.out.println("Number of rows = " + this.currentLayer);
+//		System.out.println("Total oil = " + this.totalOil);
 	}
 
 	private void go() {
@@ -64,7 +64,7 @@ public class Percolation {
 			this.hasOil = false;
 		} else {
 			this.percolate();
-			this.totalOil += this.numberOfOilInCurrentLayer();
+//			this.totalOil += this.numberOfOilInCurrentLayer();
 			this.copyNextLayer();
 			this.currentLayer++;
 		}
