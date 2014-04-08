@@ -76,7 +76,7 @@ public class Percolation {
 	}
 
 	private void changePorosity(){
-		this.porosity = this.porosity * 0.99f;
+		this.porosity = this.porosity * 0.999f;
 	}
 	
 	protected int numberOfOilInCurrentLayer() {

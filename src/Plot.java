@@ -17,14 +17,32 @@ public class Plot {
 	ChartPanel frame1;
 	private DefaultXYDataset dataSet = new DefaultXYDataset();
 
-	public Plot(String name){
+	public Plot(int modelMode, int porosityMode){
+		String mMode;
+		String pMode;
+		if(modelMode == Experiment.TWO_D){
+			mMode = "2D";
+		}else{
+			mMode = "3D";
+		}
+		if(porosityMode == Percolation.CONSTANT_POROSITY){
+			pMode = "Constant Porosity";
+		}else{
+			pMode = "Different Porosity";
+		}
+		String name = mMode + " " + pMode + " Experiment";
 //		XYDataset xydataset = createDataset();
 		JFreeChart jfreechart = ChartFactory.createXYLineChart(
-				name, "Porosity", "Depth", this.dataSet, PlotOrientation.VERTICAL, true, true,
+				name, "Porosity", "Depth", this.dataSet, PlotOrientation.VERTICAL, false, true,
 				false);
 		XYPlot xyplot = (XYPlot) jfreechart.getPlot();
 		NumberAxis domain = (NumberAxis) xyplot.getDomainAxis();
-        domain.setRange(0.10, 0.75);
+		if(modelMode == Experiment.TWO_D){
+			domain.setRange(Experiment.INITIAL_POROSITY_2D, Experiment.MAX_POROSITY_2D);
+		}else{
+			domain.setRange(Experiment.INITIAL_POROSITY_3D, Experiment.MAX_POROSITY_3D);
+		}
+        
         domain.setTickUnit(new NumberTickUnit(0.05));
         domain.setVerticalTickLabels(true);
 //        NumberAxis range = (NumberAxis) xyplot.getRangeAxis();
@@ -42,7 +60,7 @@ public class Plot {
 	}
 
 	public void addSeries(String name, ArrayList<ExperimentResult> results){
-		double[][] series = new double[2][Experiment.NUM_OF_POROSITIES];
+		double[][] series = new double[2][results.size()];
 		for(int i = 0; i < results.size(); i++){
 			series[0][i] = (double) results.get(i).getPorosity();
             series[1][i] = results.get(i).getFinalDepth();
@@ -63,8 +81,8 @@ public class Plot {
 	public static void main(String args[]) {
 		JFrame frame = new JFrame("Percolation");
 		frame.setLayout(new GridLayout(1, 1, 10, 10));
-		frame.add(new Plot("Experiment").getChartPanel());
-		frame.setBounds(50, 50, 800, 600);
+		frame.add(new Plot(0,0).getChartPanel());
+		frame.setBounds(50, 50, 500, 400);
 		frame.setVisible(true);
 	}
 
